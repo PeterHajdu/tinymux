@@ -576,6 +576,8 @@ cross_compiling=no
 subdirs=
 MFLAGS=
 MAKEFLAGS=
+EXTRA_INCLUDE_PATH="-I /usr/local/include"
+EXTRA_LIB_PATH="-L /usr/local/lib"
 
 # Identity of this package.
 PACKAGE_NAME='TinyMUX'
@@ -623,6 +625,8 @@ ac_includes_default="\
 #endif"
 
 ac_subst_vars='LTLIBOBJS
+EXTRA_INCLUDE_PATH
+EXTRA_LIB_PATH
 LIBOBJS
 DL_LIB
 SQL_LIBS

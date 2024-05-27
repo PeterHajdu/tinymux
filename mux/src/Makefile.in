@@ -64,6 +64,10 @@ INLINESQL   = @INLINESQL@
 SQL_LIBS    = @SQL_LIBPATH@ @SQL_LIBS@
 SQL_INCLUDE = @SQL_INCLUDE@
 
+# Extra lib and include paths
+EXTRA_INCLUDE_PATH = @EXTRA_INCLUDE_PATH@
+EXTRA_LIB_PATH = @EXTRA_LIB_PATH@
+
 # SSL encryption support.  This provides a 'port_ssl' configuration directive
 # which adds SSL-enabled ports to the listening MUX ports.  It also enables the
 # 'ssl_certificate_file' and 'ssl_certificate_key' and 'ssl_certificate_password'
@@ -157,7 +161,7 @@ DEFS =
 AUX_SRC = unsplit.cpp
 ALLCXXFLAGS = $(CXXFLAGS) $(OPTIM) $(DEFS) $(MEMORY_BASED) $(WOD_REALMS) \
     $(REALITY_LVLS) $(STUB_SLAVE) $(DEPRECATED) $(SELFCHECK) $(INLINESQL) \
-    $(SQL_INCLUDE) $(SSL)
+    $(SQL_INCLUDE) $(EXTRA_INCLUDE_PATH) $(SSL)
 
 # Compiliation source files.
 #
@@ -192,11 +196,11 @@ unsplit: unsplit.o
 netmux: $(NETMUX_OBJ) $(VER_SRC)
 	$(CXX) $(ALLCXXFLAGS) $(VER_FLG) -c $(VER_SRC)
 	( if [ -f netmux ]; then mv -f netmux netmux~ ; fi )
-	$(CXX) $(ALLCXXFLAGS) -o netmux $(NETMUX_OBJ) $(VER_OBJ) -L. $(LIBS) $(SQL_LIBS) $(MUX_LIBS)
+	$(CXX) $(ALLCXXFLAGS) -o netmux $(NETMUX_OBJ) $(VER_OBJ) -L. $(LIBS) $(SQL_LIBS) $(EXTRA_LIB_PATH) $(MUX_LIBS)
 
 @DYNAMICLIB_TARGET@: $(LIBMUX_BASE_SRC)
 	( if [ -f @DYNAMICLIB_TARGET@ ]; then mv -f @DYNAMICLIB_TARGET@ @DYNAMICLIB_TARGET@~ ; fi )
-	$(CXX) $(ALLCXXFLAGS) @DYNAMICLIB_CXXFLAGS@ -o @DYNAMICLIB_TARGET@ $(LIBMUX_BASE_SRC) $(LIBS) $(DL_LIB) $(SQL_LIBS)
+	$(CXX) $(ALLCXXFLAGS) @DYNAMICLIB_CXXFLAGS@ -o @DYNAMICLIB_TARGET@ $(LIBMUX_BASE_SRC) $(LIBS) $(DL_LIB) $(SQL_LIBS) $(EXTRA_LIB_PATH)
 
 subdirs: $(SUBDIRS)
 
